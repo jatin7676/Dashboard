@@ -7,6 +7,8 @@ import { RevenueChartSkeleton, LatestInvoicesSkeleton ,CardsSkeleton} from '@/ap
 import CardWrapper from '@/app/ui/dashboard/cards';
 //import { fetchCardData } from '@/app/lib/data';
 
+// Force dynamic rendering to prevent build-time data fetching
+export const dynamic = 'force-dynamic';
 
 export default async function Page() {
     // const latestInvoices = await fetchLatestInvoices();

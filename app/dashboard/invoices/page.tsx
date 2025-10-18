@@ -7,8 +7,8 @@ import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { fetchInvoicesPages } from '@/app/lib/data';
 
-
-
+// Force dynamic rendering to prevent build-time data fetching
+export const dynamic = 'force-dynamic';
 
 export default async function Page(props: {
   searchParams?: Promise<{

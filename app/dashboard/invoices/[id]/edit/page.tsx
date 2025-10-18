@@ -3,6 +3,8 @@ import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
 import { fetchInvoiceById, fetchCustomers } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
 
+// Force dynamic rendering to prevent build-time data fetching
+export const dynamic = 'force-dynamic';
 
  
 export default async function Page(props: { params: Promise<{ id: string }> }) {

@@ -4,6 +4,9 @@ import { CreateCustomer } from '@/app/ui/customers/buttons';
 import { lusitana } from '@/app/ui/fonts';
 import { Suspense } from 'react';
 
+// Force dynamic rendering to prevent build-time data fetching
+export const dynamic = 'force-dynamic';
+
 export default async function Page(props: {
   searchParams?: Promise<{
     query?: string;
