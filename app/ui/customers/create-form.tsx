@@ -8,10 +8,10 @@ import {
 } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
 import { useActionState } from 'react';
-import { createCustomer, State } from '@/app/lib/action';
+import { createCustomer, CustomerState } from '@/app/lib/action';
 
 export default function Form() {
-  const initialState: State = { message: null, errors: {} };
+  const initialState: CustomerState = { message: null, errors: {} };
 
   const [state, formAction] = useActionState(createCustomer, initialState);
 

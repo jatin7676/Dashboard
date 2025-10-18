@@ -9,10 +9,10 @@ import {
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
 import { useActionState } from 'react';
-import { updateCustomer, State } from '@/app/lib/action';
+import { updateCustomer, CustomerState } from '@/app/lib/action';
 
 export default function EditCustomerForm({ customer }: { customer: CustomerForm }) {
-  const initialState: State = { message: null, errors: {} };
+  const initialState: CustomerState = { message: null, errors: {} };
   const updateCustomerWithId = updateCustomer.bind(null, customer.id);
   const [state, formAction] = useActionState(updateCustomerWithId, initialState);
 

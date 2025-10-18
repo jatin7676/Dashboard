@@ -33,18 +33,24 @@ const CustomerFormSchema = z.object({
 const CreateInvoice = FormSchema.omit({ id: true, date: true });
 const CreateCustomer = CustomerFormSchema.omit({ id: true });
 
-export type State = {
+export type InvoiceState = {
   errors?: {
     customerId?: string[];
     amount?: string[];
     status?: string[];
+  };
+  message?: string | null;
+};
+
+export type CustomerState = {
+  errors?: {
     name?: string[];
     email?: string[];
     image_url?: string[];
   };
   message?: string | null;
 };
-export async function createInvoice(prevState: State, formData: FormData) {
+export async function createInvoice(prevState: InvoiceState, formData: FormData) {
   const validatedFields = CreateInvoice.safeParse({
     customerId: formData.get('customerId'),
     amount: formData.get('amount'),
@@ -81,7 +87,7 @@ const UpdateInvoice = FormSchema.omit({ id: true, date: true });
 // ...
 export async function updateInvoice(
   id: string,
-  prevState: State,
+  prevState: InvoiceState,
   formData: FormData,
 ) {
   const validatedFields = UpdateInvoice.safeParse({
@@ -126,7 +132,7 @@ export async function deleteInvoice(id: string) {
 
 // Customer actions
 
-export async function createCustomer(prevState: State, formData: FormData) {
+export async function createCustomer(prevState: CustomerState, formData: FormData) {
   const validatedFields = CreateCustomer.safeParse({
     name: formData.get('name'),
     email: formData.get('email'),
@@ -160,7 +166,7 @@ const UpdateCustomer = CustomerFormSchema;
 
 export async function updateCustomer(
   id: string,
-  prevState: State,
+  prevState: CustomerState,
   formData: FormData,
 ) {
   const validatedFields = UpdateCustomer.safeParse({
