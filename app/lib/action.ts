@@ -210,11 +210,62 @@ export async function deleteCustomer(id: string) {
   }
 }
 
+// Signup action
+export async function signup(
+  prevState: string | undefined,
+  formData: FormData,
+) {
+  const name = formData.get('name') as string;
+  const email = formData.get('email') as string;
+  const password = formData.get('password') as string;
+
+  // Validate input
+  if (!name || !email || !password) {
+    return 'Please fill in all fields.';
+  }
+
+  if (password.length < 6) {
+    return 'Password must be at least 6 characters.';
+  }
+
+  try {
+    // Check if user already exists
+    const existingUser = await sql`SELECT * FROM users WHERE email = ${email}`;
+    
+    if (existingUser.length > 0) {
+      return 'Email already registered. Please sign in instead.';
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Insert new user
+    await sql`
+      INSERT INTO users (name, email, password)
+      VALUES (${name}, ${email}, ${hashedPassword})
+    `;
+
+    // Revalidate the path and redirect
+    revalidatePath('/login');
+  } catch (error) {
+    console.error('Signup error:', error);
+    // Check if it's a duplicate key error
+    if (error && typeof error === 'object' && 'code' in error) {
+      return 'Email already registered. Please sign in instead.';
+    }
+    return 'Failed to create account. Please try again.';
+  }
+  
+  // Redirect after successful signup (outside try-catch)
+  redirect('/login?registered=true');
+}
+
 //connecting auth logic with logic form
 
  
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
+import bcrypt from 'bcrypt';
  
 // ...
  
